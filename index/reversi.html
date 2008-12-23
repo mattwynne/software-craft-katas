@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><TITLE>Coding Dojo Wiki: KataReversi</TITLE>
+<META NAME='KEYWORDS' CONTENT='Kata, Reversi'/>
+</HEAD><BODY BGCOLOR="white">
+<div class=wikiheader><h1><a href="wiki.pl?FrontPage"><img src="/img/wiki.png" alt="[Home]" border=0></a><a href="wiki.pl?back=KataReversi">KataReversi</a></h1><a href="wiki.pl?FrontPage" class=wikipagelink>FrontPage</a> | <a href="wiki.pl?RecentChanges" class=wikipagelink>RecentChanges</a> | <a href="wiki.pl?action=editprefs">Preferences</a><br>
+<hr class=wikilineheader></div><div class=wikitext><b>About this Kata</b>
+<p>
+
+This Kata was introduced to me by LaurentBossavit<a href="wiki.pl?action=edit&id=LaurentBossavit" class=wikipageedit>?</a> --<a href="wiki.pl?EmilyBache" class=wikipagelink>EmilyBache</a>
+<p>
+Difficulty: Medium
+<p>
+<b>Problem Description</b>
+<p>
+Reversi is a board game for two players. More information can be found on Wikipedia en.wikipedia.org/wiki/Reversi<a href="wiki.pl?action=edit&id=KataReversi/Reversi" class=wikipageedit>?</a>. This Kata is to write a program that takes a current board position together with information about whose turn it is, and returns a list of the legal moves for that player. A move is only legal if it results in at least one of the opponent's counters being flipped.
+<p>
+<b>Suggested Test Cases</b>
+
+<pre>
+........
+........
+........
+...BW...
+...WB...
+........
+........
+........
+B
+</pre>
+(A "." indicates an empty square. A "B" indicates a black piece and a "W" represents a white piece. The trailing "B" indicates that it is black's turn)
+<p>
+You could either output the possible moves as co-ordinates (columns labelled A - H, rows labelled 1 - 8 starting from top left hand corner) like this:
+[C5, D6, E3, F4]
+<p>
+or graphically like this:
+<p>
+<pre>
+........
+........
+....0...
+...BW0..
+..0WB...
+...0....
+........
+........
+B
+</pre>
+<p>
+<b>Comments from those who are working on this Kata</b>
+<p>
+Please try this Kata and comment! We could probably do with some more test cases too.
+
+</div><hr class=wikilinefooter>
+<div class=wikifooter><form method="post" action="wiki.pl" enctype="application/x-www-form-urlencoded">
+<a href="wiki.pl?FrontPage" class=wikipagelink>FrontPage</a> | <a href="wiki.pl?RecentChanges" class=wikipagelink>RecentChanges</a> | <a href="wiki.pl?action=editprefs">Preferences</a><br>
+<a href="wiki.pl?action=edit&id=KataReversi" class=wikipageedit>Edit text of this page</a> | <a href="wiki.pl?action=history&id=KataReversi">View other revisions</a><br>Last edited September 6, 2007 10:32 am by <a href="wiki.pl?EmilyBache" title="ID 1097 from c-3132e353.515-1-64736c10.cust.bredbandsbolaget.se">EmilyBache</a> <a href="wiki.pl?action=browse&diff=1&id=KataReversi">(diff)</a><br>Search: <input type="text" name="search"  size="20" /><input type="hidden" name="dosearch" value="1"  /></form></div>
+
+</body>
+</html>
