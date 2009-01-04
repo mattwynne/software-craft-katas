@@ -18,7 +18,7 @@ describe PrimeFactors, "#generate" do
   
   examples.each do |number, expected_result|
     
-    it "given #{number}, it should return [#{expected_result.to_s}]" do
+    it "given #{number}, it should return #{expected_result.inspect}" do
       generate(number).should == expected_result
     end
     
