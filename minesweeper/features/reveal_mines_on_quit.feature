@@ -12,3 +12,13 @@ Feature: Reveal Mines on Quit
       .....
       .....
       """
+
+  Scenario: Place Single Mine on small Gameboard
+    Given I have a 3 x 2 gameboard
+    And there is a mine at co-ordinates (2, 1)
+    When I quit the game
+    Then I should see the following output
+      """
+      1*1
+      111
+      """
