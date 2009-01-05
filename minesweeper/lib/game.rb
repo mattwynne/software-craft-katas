@@ -1,54 +1,40 @@
 class Game
-  def initialize(opts)
-    parse(opts)
+  def initialize(board, output)
+    @board, @output = board, output
   end
 
-  def draw_field
-    @field.draw_on(@output)
+  def quit
+    @board.reveal_on(@output)
   end
-
-  private
-
-  def parse(opts)
-    @output = opts[:output]
-    @field = Field.new(
-      opts[:width], 
-      opts[:height],
-      opts[:mines])
-  end
+  
 end
 
-class Field
-  def initialize(width, height, num_mines)
+class GameBoard
+  def initialize(width, height)
     @rows = Array.new(height) do |y|
       Array.new(width) do |x|
         EmptySquare.new(Location.new(x,y, self))
       end
     end
-    num_mines.times do
-      place_bomb
-    end
   end
 
-  def draw_on(output)
+  def reveal_on(output)
     @rows.each do |row|
       output.puts row.map{ |sq| sq.render }.join('')
     end
   end
 
-  def bombed?(x,y)
+  def mined?(x,y)
     return false if x < 0 or y < 0 
     return false if x > width - 1 or y > height - 1 
-    @rows[y][x].bombed?
+    @rows[y][x].mined?
+  end
+
+  def place_mine(x, y)
+    @rows[y][x] = Mine.new(Location.new(x,y, self))
   end
 
   private 
-
-  def place_bomb
-    x = (rand * width).to_i
-    y = (rand * height).to_i
-    @rows[y][x] = Bomb.new(Location.new(x,y, self))
-  end
 
   def width
     @rows[0].length
@@ -64,17 +50,17 @@ class Location
   def initialize(x, y, field)
     @x, @y, @field = x, y, field
   end
-  def nearby_bombs
+  def nearby_mines
     bomb_count = 0
     nearby_locations.each do |location|
-      bomb_count += 1 if location.bombed?
+      bomb_count += 1 if location.mined?
     end
     bomb_count
   end
   protected
   
-  def bombed?
-    @field.bombed?(x,y)
+  def mined?
+    @field.mined?(x,y)
   end
   
   private
@@ -107,29 +93,21 @@ end
 
 class EmptySquare < Square
   def render
-    nearby_bombs = @location.nearby_bombs
-   return '.' if nearby_bombs == 0
-    nearby_bombs
+    nearby_mines = @location.nearby_mines
+    return '.' if nearby_mines == 0
+    nearby_mines
   end
   
-  def bombed?
+  def mined?
     false
   end
 end
 
-class Bomb < Square
+class Mine < Square
   def render
     '*'
   end
-  def bombed?
+  def mined?
     true
   end
 end
-
-# game = Game.new(
-#   :output => Kernel,
-#   :width => 10,
-#   :height => 15,
-#   :mines => 7)
-# game.draw_field
-# 

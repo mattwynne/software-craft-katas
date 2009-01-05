@@ -1,0 +1,8 @@
+  * Branches
+    * without solution
+    * with only some tests (use tags for that?)
+  * Rake task with
+    * features
+    * coverage
+    * flog stats
+  * Put it on github so we can fork / share our solutions
