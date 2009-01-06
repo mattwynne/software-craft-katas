@@ -6,7 +6,34 @@ class Game
   def quit
     @board.reveal_on(@output)
   end
+end
+
+class Cell
+  def initialize
+    @state = 0
+  end
+      
+  def mine?
+    @state == -1
+  end
   
+  def mine!
+    @state = -1
+  end
+  
+  def DANGER!
+    @state += 1 unless mine?
+  end
+  
+  def to_s
+    if @state == 0
+      '.'
+    elsif @state == -1
+      '*'
+    else
+      @state.to_s
+    end
+  end
 end
 
 class GameBoard
@@ -17,48 +44,33 @@ class GameBoard
 
   def initialize_board
     @board = Array.new(@height) do 
-       Array.new(@width, 0) 
+       Array.new(@width) {Cell.new} 
     end
   end
   
   def reveal_on(output)
     @board.each do |row|
-      cells = row.map do |cell|
-        GameBoard.display_for_cell(cell)
-      end
-      output.puts(cells.join)
+      output.puts(row.join)
     end
   end
   
-  def self.display_for_cell(count)
-    if count == 0
-      '.'
-    elsif count == -1
-      '*'
-    else
-      count.to_s
-    end
+  def cell(x, y)
+    @board[y][x]
   end
-
+  
   def place_mine(x, y)
-    each_neighbour(x, y) do |dx, dy|
-      if coordinates_on_board?( dx, dy ) and !is_mine?( dx, dy )
-        @board[dy][dx] += 1
-      end
+    each_neighbour(x, y) do |neighbour|
+      neighbour.DANGER!
     end
-    @board[y][x] = -1    
+    cell(x, y).mine!
   end
   
   def each_neighbour(x, y)
     for i in (-1..1) 
       for j in (-1..1)
-        yield x + i, y + j
+        yield cell(x + i, y + j) if coordinates_on_board?( x + i, y + j )
       end
     end
-  end
-  
-  def is_mine?( x, y )
-    @board[y][x] == -1
   end
   
   def coordinates_on_board?( x, y )
