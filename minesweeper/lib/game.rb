@@ -26,7 +26,7 @@ class GameBoard
     
     @board.each do |row|
       row.each do |cell|
-        result += display_for_cell(cell)
+        result += GameBoard.display_for_cell(cell)
       end
       result += "\n"
     end
@@ -34,7 +34,7 @@ class GameBoard
     output.puts(result[0..-2])
   end
   
-  def display_for_cell(count)
+  def self.display_for_cell(count)
     if count == 0
       '.'
     elsif count == -1
@@ -49,12 +49,20 @@ class GameBoard
       for j in (-1..1)
         x_plus_i = x + i
         y_plus_j = y + j
-        if x_plus_i >= 0 and x_plus_i < @width and y_plus_j >= 0 and y_plus_j < @height and @board[y_plus_j][x_plus_i] != -1
+        if  coordinates_on_board?( x_plus_i, y_plus_j ) and !is_mine?( x_plus_i, y_plus_j )
           @board[y_plus_j][x_plus_i] += 1
         end
       end
     end
     @board[y][x] = -1    
+  end
+  
+  def is_mine?( x, y )
+    @board[y][x] == -1
+  end
+  
+  def coordinates_on_board?( x, y )
+    x >= 0 and x < @width and y >= 0 and y < @height
   end
 end
 
