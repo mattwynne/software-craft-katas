@@ -22,16 +22,12 @@ class GameBoard
   end
   
   def reveal_on(output)
-    result = ""
-    
     @board.each do |row|
-      row.each do |cell|
-        result += GameBoard.display_for_cell(cell)
+      cells = row.map do |cell|
+        GameBoard.display_for_cell(cell)
       end
-      result += "\n"
+      output.puts(cells.join)
     end
-    
-    output.puts(result[0..-2])
   end
   
   def self.display_for_cell(count)
@@ -45,16 +41,20 @@ class GameBoard
   end
 
   def place_mine(x, y)
-    for i in (-1..1) 
-      for j in (-1..1)
-        x_plus_i = x + i
-        y_plus_j = y + j
-        if  coordinates_on_board?( x_plus_i, y_plus_j ) and !is_mine?( x_plus_i, y_plus_j )
-          @board[y_plus_j][x_plus_i] += 1
-        end
+    each_neighbour(x, y) do |dx, dy|
+      if coordinates_on_board?( dx, dy ) and !is_mine?( dx, dy )
+        @board[dy][dx] += 1
       end
     end
     @board[y][x] = -1    
+  end
+  
+  def each_neighbour(x, y)
+    for i in (-1..1) 
+      for j in (-1..1)
+        yield x + i, y + j
+      end
+    end
   end
   
   def is_mine?( x, y )
