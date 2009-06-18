@@ -10,9 +10,7 @@
         var size = 100;
         var view = new WorldView(size);
         view.initWorld();
-        //setInterval(function(){view.antStep(1000)}, 10);
-        view.antStep(100);
-        // view.draw();
+        setInterval(function(){view.antStep(1)}, 5);
       });
     </script>
     <style>
