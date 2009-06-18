@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title></title>
+  <script type="text/javascript" src="models/ant.js"></script>
+    <script type="text/javascript" src="models/world.js"></script>
+    <script type="text/javascript" src="view/worldView.js"></script>
+    <script type="text/javascript" src="spec/lib/jquery-1.2.6.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var size = 100;
+        var view = new WorldView(size);
+        view.initWorld();
+        //setInterval(function(){view.antStep(1000)}, 10);
+        view.antStep(100);
+        // view.draw();
+      });
+    </script>
+    <style>
+      
+      div div
+        {
+          float: left;
+          width: 10px;
+          height: 10px;
+          border: 1px solid red;
+          margin: -1px;
+        }
+        
+        .black {
+          background: black;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="world" style="position: relative">
+      
+    </div>
+  </body>
+</html>

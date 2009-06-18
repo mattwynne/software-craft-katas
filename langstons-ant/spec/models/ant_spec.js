@@ -7,7 +7,9 @@ Screw.Unit(function() {
   describe("Ant", function() {
     
     before(function() {
-      world = new World(10); // world starts out white.
+      var view = { paintBlack : function () {},
+                   paintWhite : function () {}};
+      world = new World(10, view); // world starts out white.
       ant = new Ant(world);
     })
     

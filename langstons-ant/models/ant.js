@@ -10,16 +10,22 @@ function Ant(world) {
     
     this.directions = [
       function() {
-        y++;
+        y = (y + 1) % world.size;
       },
       function() {
-        x++;
+        x = (x + 1) % world.size;
       },
       function() {
-        y--;
+        y = (y - 1) % world.size;
+        if(y < 0) {
+          y = world.size + y;
+        }
       }, 
       function() {
-        x--;
+        x = (x - 1) % world.size;
+        if(x < 0) {
+          x = world.size + x;
+        }
       }
     ]
     
