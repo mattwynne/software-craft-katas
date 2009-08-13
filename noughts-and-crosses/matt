@@ -19,7 +19,11 @@ class Board
       return coords(num) if in_corner and empty
     end
     
-    '(0,0)'
+    @layout.split('').each_with_index do |cell, index|
+      num = index + 1
+      empty = (cell == '.')
+      return coords(num) if empty
+    end
   end
   
   def coords(num)
