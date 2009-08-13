@@ -3,27 +3,32 @@ board_layout = ARGV[0]
 my_player = ARGV[1]
 
 class Board
-  def initialize(board_layout)
-    @layout = board_layout
+  def initialize(board_layout, my_player)
+    @layout, @me = board_layout, my_player
+    @opponent = 'x'
+    @opponent = 'o' if @me == 'x'
   end
   
   def next_move
     sum = 0
-    @layout.split('').each_with_index do |cell, index|
+    return coords(block_opponent) if opponent_about_to_win?
+    
+    cells.each_with_index do |cell, index|
       num = index + 1
       in_corner = [1, 3, 7, 9].include?(num)
       empty = (cell == '.')
-      # puts in_corner
-      # puts empty
-      # puts num
       return coords(num) if in_corner and empty
     end
     
-    @layout.split('').each_with_index do |cell, index|
+    cells.each_with_index do |cell, index|
       num = index + 1
       empty = (cell == '.')
       return coords(num) if empty
     end
+  end
+  
+  def cells
+    @layout.split('')
   end
   
   def coords(num)
@@ -31,7 +36,24 @@ class Board
     y = (num - 1) / 3
     "(#{y},#{x})"
   end
+  
+  def opponent_about_to_win?
+    !block_opponent.nil?
+  end
+  
+  def opponent
+    @opponent
+  end
+  
+  def block_opponent
+    if cells[0] == opponent 
+      return 1 if cells[2] == opponent
+      return 3 if cells[6] == opponent
+    end
+
+    return nil
+  end
 end
 
-board = Board.new(board_layout)
+board = Board.new(board_layout, my_player)
 puts board.next_move
