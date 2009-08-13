@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+board_layout = ARGV[0]
+my_player = ARGV[1]
+
+class Board
+  def initialize(board_layout)
+    @layout = board_layout
+  end
+  
+  def next_free_square
+    '(0,0)'
+  end
+end
+
+board = Board.new(board_layout)
+puts board.next_free_square
