@@ -10,30 +10,53 @@ class Board
   end
   
   def next_move
-    sum = 0
     return coords(block_opponent) if opponent_about_to_win?
     
-    cells.each_with_index do |cell, index|
-      num = index + 1
-      in_corner = [1, 3, 7, 9].include?(num)
-      empty = (cell == '.')
-      return coords(num) if in_corner and empty
-    end
+    return dumb_corner_move if board_empty?
     
-    cells.each_with_index do |cell, index|
-      num = index + 1
-      empty = (cell == '.')
-      return coords(num) if empty
-    end
+    return winning_move if winning_move
+    
+    return next_empty_cell
   end
   
   def cells
     @layout.split('')
   end
   
-  def coords(num)
-    x = (num - 1) % 3
-    y = (num - 1) / 3
+  def winning_move
+    # middle
+    return coords(4) if cells[0] == @me and cells[8] == @me
+    return coords(4) if cells[2] == @me and cells[6] == @me
+
+    return coords(1) if cells[0] == @me and cells[2] == @me
+    return coords(3) if cells[0] == @me and cells[6] == @me
+    return coords(5) if cells[2] == @me and cells[8] == @me
+    return coords(7) if cells[6] == @me and cells[8] == @me
+    nil
+  end
+  
+  def next_empty_cell
+    cells.each_with_index do |cell, index|
+      empty = (cell == '.')
+      return coords(index) if empty
+    end
+  end
+  
+  def dumb_corner_move
+    cells.each_with_index do |cell, index|
+      in_corner = [0, 2, 6, 8].include?(index)
+      empty = (cell == '.')
+      return coords(index) if in_corner and empty
+    end
+  end
+  
+  def board_empty?
+    @layout == '.........'
+  end
+  
+  def coords(index)
+    x = (index) % 3
+    y = (index) / 3
     "(#{y},#{x})"
   end
   
@@ -47,11 +70,10 @@ class Board
   
   def block_opponent
     if cells[0] == opponent 
-      return 1 if cells[2] == opponent
-      return 3 if cells[6] == opponent
+      return 0 if cells[2] == opponent
+      return 2 if cells[6] == opponent
     end
-
-    return nil
+    nil
   end
 end
 
