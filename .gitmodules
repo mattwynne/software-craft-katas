@@ -1,0 +1,3 @@
+[submodule "minesweeper"]
+	path = minesweeper
+	url = git@github.com:mattwynne/kata-minesweeper.git
